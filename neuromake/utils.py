@@ -8,10 +8,7 @@ import itertools as it
 import neuromake as nm
 import neuromake.exceptions as err
 
-keynames = os.path.join(os.path.dirname(__file__),
-                        'config','keynames.json')
-with open(keynames,'r') as fp:
-    _bidsKeyNames = json.load(fp)
+
 
 def multireplace(s,rep,match_end=False):
     '''
