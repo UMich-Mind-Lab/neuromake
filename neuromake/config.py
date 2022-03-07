@@ -67,12 +67,19 @@ class Config():
         '''
         return the filetype from the bidsfile
         '''
-        d = {"<label>":"[0-9A-Za-z]+","<index>":"[0-9]+","<suffix>":"[0-9A-Za-z]+","\[":"(","\]":")?"}
+        d = {"<label>":"[0-9A-Za-z]+","<index>":"[0-9]+","<suffix>":"[0-9A-Za-z]+","<matches>":"[0-9A-Za-z_-]+","\[":"(","\]":")?"}
         bidsfile = os.path.basename(bidsfile)
+        matches = []
         for k,v in self._bidsFileTypes.items():
             if any([ re.match(nu.multireplace(re.escape(t),d),bidsfile) for t in v['templates']]):
-                return k
-
+                matches.append(k)
+        if len(matches) == 0:
+            return None
+        elif len(matches) == 1:
+            return matches[0]
+        else:
+            return matches
+            
     def get_bids_key_val_pairs(self,filetype):
         '''
         returns a list of variables in the proper order for constructing generic

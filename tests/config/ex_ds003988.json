@@ -1,0 +1,54 @@
+{
+  "bids": {
+    "__metadata__":{
+      "label":"BIDS variables",
+      "help":"BIDS variables used within the snakemake workflow. These variables will be used to query the BIDSLayout to find raw files for use within the snakemake workflow. BIDS variables set as required are those that are necessary for the workflow, such as 'echo' in a multiecho preprocessing pipeline. Other BIDS variables may be used to specify the file and metadata, but are not actively used in processing. Those variables should be set as optional. Outside of 'subject' and 'session', BIDS variables in neuromake are prefixed by the '<filetype>_', where filetype is one of ['anat','func','fmap','physio']. This allows for complex workflows where a BIDS keyword can be specified differently for different modalities that are used together (e.g., an anat_acquisition and func_acquisition). BIDS variables are accessible within your snakefile via config['bids'][<label>].",
+      "required":["subject"],
+      "valid":["subject","session","anat_acquisition","anat_ceagent","anat_reconstruction","anat_run","anat_part","anat_mod","anat_echo","anat_flip","anat_inv","anat_mt","anat_suffix","func_task","func_acquisition","func_ceagent","func_reconstruction","func_direction","func_run","func_echo","func_part","func_suffix","dwi_acquisition","dwi_direction","dwi_run","dwi_part","dwi_suffix","physio_recording","physio_suffix","fmap_acquisition","fmap_ceagent","fmap_direction","fmap_run","fmap_suffix"]
+      },
+    "subject": [
+      "01","02"
+    ],
+    "func_task": ["read"],
+    "func_run": ["1","2","3","4"],
+    "func_suffix": ["bold"],
+    "anat_suffix": ["T1w"],
+    "fmap_acquisition":[
+      "multiband"
+    ],
+    "fmap_direction": [
+      "AP",
+      "PA"
+    ],
+    "fmap_suffix": [
+      "epi"
+    ]
+  },
+  "directories": {
+    "__metadata__":{
+      "label":"Filepaths and Directories",
+      "help":"Specify filepaths to be used by the snakemake workflow. By default, neuromake requires 4 directories: 1) bids (path to bids dataset) 2) bidslayout (path to create indexed pybids layout), 3) working directory, and 4) output directory. However, one may also want to point snakemake towards installed software (such as a singularity container) or towards other generic files or paths (such as an additional config file). These variables are accessible within the snakemake file via config['directories'][<label>]",
+      "required":["bids","bidslayout","working","output"]
+    },
+    "working":"./tests/data/working",
+    "output": "./tests/data/output",
+    "bids": "./tests/bids/ds003988",
+    "bidslayout": "./tests/bidslayout/ds003988"
+  },
+  "parameters": {
+    "__metadata__":{
+      "label":"Snakemake Parameters",
+      "help":"Specify parameters and other constants to be used by the snakemake workflow. Some common uses for this may include function options (such as a smoothing FWHM or value threshold) or workflow toggles (True/False to include an optional step within the processing stream). These variables are accessible within the snakemake file via config['parameters'][<label>] ",
+      "required":[]
+    },
+    "use_physio": true,
+    "use_fieldmap": true
+  },
+  "templates": {
+    "__metadata__":{
+      "label":"String Formats",
+      "help":"Specify snakemake wildcard template strings. These are used within the pipeline's snakefile to specify the base BIDS variables used for a specific dataset, without hard-coding those specific bids variables in the snakefile",
+      "required":[]
+    }
+  }
+}

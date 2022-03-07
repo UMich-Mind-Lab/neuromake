@@ -60,15 +60,6 @@
             "sub-<label>[_ses-<label>][_acq-<label>][_dir-<label>][_run-<index>][_part-<mag|phase|real|imag>][_recording-<label>]_stim.tsv.gz"
     ]
   },
-  "physio":{
-      "labels":["recording","suffix"],
-      "templates":[
-        "<matches>[_recording-<label>]_physio.tsv.gz",
-        "<matches>[_recording-<label>]_physio.json",
-        "<matches>[_recording-<label>]_stim.tsv.gz",
-        "<matches>[_recording-<label>]_stim.json"
-      ]
-    },
   "fmap":{
     "labels":["acquisition","ceagent","direction","run","suffix"],
     "templates":[
@@ -89,5 +80,14 @@
       "sub-<label>[_ses-<label>][_acq-<label>][_ce-<label>]_dir-<label>[_run-<index>]_epi.json",
       "sub-<label>[_ses-<label>][_acq-<label>][_ce-<label>]_dir-<label>[_run-<index>]_epi.nii[.gz]"
     ]
-    }
+  },
+  "physio":{
+      "labels":["recording","suffix"],
+      "templates":[
+        "<matches>[_recording-<label>]_physio.tsv.gz",
+        "<matches>[_recording-<label>]_physio.json",
+        "<matches>[_recording-<label>]_stim.tsv.gz",
+        "<matches>[_recording-<label>]_stim.json"
+    ]
+  }
 }

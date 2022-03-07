@@ -43,10 +43,10 @@ def multireplace_dict_keys(d,rep,match_end=False):
     '''
     new = {}
     for k in d.keys():
-        new[multireplace(k,rep)] = d[k]
+        new[multireplace(k,rep,match_end=match_end)] = d[k]
     return new
 
-def get_n_combos_per_sub(d):
+def get_n_combos_per_subject(d):
     '''
     calculates combinations of bids vars per subject in the specified dictionary
     this is used to calculate number of expected files when validating subjects
@@ -82,27 +82,47 @@ def get_bids_vars_dict(bidsfile,add_prefix=True):
     label2key = { v:k for k,v in config._bidsKeyNames.items() }
     d = multireplace_dict_keys(d,label2key,match_end=True)
 
-    # get the filetype based on bids suffix
-    filetype = config.get_bids_filetype(bidsfile)
-    dout = {}
-    for k,v in d.items():
-        if k in config._bidsFileTypes[filetype]['labels']:
-            if add_prefix:
-                dout[filetype+'_'+k] = v
-            else:
-                dout[k] = v
-        else:
-            dout[k] = v
-    return dout
+    if add_prefix:
+        # get the filetype based on bids suffix
+        filetype = config.get_bids_filetype(bidsfile)
 
-def query_bids_layout(layout,d,ext=['nii.gz','nii']):
+        dout = {}
+        for k,v in d.items():
+            dout[_add_neuromake_prefix(config,k,filetype)] = v
+        return dout
+    else:
+        return d
+
+def _add_neuromake_prefix(config,bidsvar,filetype):
+    '''
+    (internal use) add the neuromake filetype prefix to a bidsvar
+
+    config = dummy config object
+    bidsvar = bids variable (must match one of config._bidsFileTypes)
+    filetype = None, a list of matching filetypes (in case of <matches>), or a
+    string with single matching filetype
+    return [<neuromakeprefix>_]<bidsvar>
+    '''
+    if isinstance(filetype,str):
+        if bidsvar in config._bidsFileTypes[filetype]['labels']:
+            return f'{filetype}_{bidsvar}'
+        else:
+            return bidsvar
+    elif isinstance(filetype,list):
+        for x in reversed(filetype):
+            if bidsvar in config._bidsFileTypes[x]['labels']:
+                return f'{x}_{bidsvar}'
+        return bidsvar
+    else:
+        return bidsvar
+
+def query_bids_layout(layout,d):
     '''
     queries the bids layout given available wildcards dictionary
     returns output from layout.get()
     '''
     rep = {'func_':'','anat_':'','physio_':'','fmap_':''}
     d = multireplace_dict_keys(d,rep)
-    d['extension'] = ext
     return layout.get(**d)
 
 def copy_bids_files(wildcards,layout,output,ext=['nii.gz','nii']):
