@@ -1,4 +1,6 @@
-include config/*.json
-include tests/config/*.json
-recursive-include tests/bids *
-recursive-include tests/bidslayout *
+include versioneer.py
+include neuromake/_version.py
+recursive-include neuromake/config *.json
+recursive-include neuromake/tests/config *.json
+recursive-include neuromake/tests/bids *
+recursive-include neuromake/tests/bidslayout *
