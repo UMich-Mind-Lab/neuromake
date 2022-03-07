@@ -3,6 +3,7 @@ import os
 import json
 import time
 import re
+import pkg_resources
 from collections import Counter
 from string import Formatter
 from bids import BIDSLayout
@@ -21,14 +22,8 @@ def debug(func):
 
 class Config():
     def __init__(self,fpath=None,reindex=False):
-        keynames = os.path.join(os.path.dirname(__file__),
-                                'config','keynames.json')
-        with open(keynames,'r') as fp:
-            self._bidsKeyNames = json.load(fp)
-        filetypes = os.path.join(os.path.dirname(__file__),
-                                 'config','filetypes.json')
-        with open(filetypes,'r') as fp:
-            self._bidsFileTypes = json.load(fp)
+        self._load_bidsKeyNames()
+        self._load_bidsFileTypes()
         self._log = []
         self._configPath = fpath
         if self._configPath is not None:
@@ -36,6 +31,16 @@ class Config():
                 self.config = json.load(fp)
             self.get_bids_layout(reindex=reindex)
         # TODO: validate config
+
+    def _load_bidsKeyNames():
+        '''set self._bidsKeyNames from package json file'''
+        stream = pkg_resources.resource_stream(__name__,'config/keynames.json')
+        self._bidsKeyNames = json.load(stream)
+
+    def _load_bidsFileTypes():
+        '''set self._bidsFileTypes from package json file'''
+        stream = pkg_resources.resource_stream(__name__,'config/filetypes.json')
+        self._bidsFileTypes = json.load(stream)
 
     def get_bids_vars(self,filetype=None):
         '''
@@ -79,7 +84,7 @@ class Config():
             return matches[0]
         else:
             return matches
-            
+
     def get_bids_key_val_pairs(self,filetype):
         '''
         returns a list of variables in the proper order for constructing generic
