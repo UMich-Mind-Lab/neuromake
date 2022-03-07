@@ -32,12 +32,12 @@ class Config():
             self.get_bids_layout(reindex=reindex)
         # TODO: validate config
 
-    def _load_bidsKeyNames():
+    def _load_bidsKeyNames(self):
         '''set self._bidsKeyNames from package json file'''
         stream = pkg_resources.resource_stream(__name__,'config/keynames.json')
         self._bidsKeyNames = json.load(stream)
 
-    def _load_bidsFileTypes():
+    def _load_bidsFileTypes(self):
         '''set self._bidsFileTypes from package json file'''
         stream = pkg_resources.resource_stream(__name__,'config/filetypes.json')
         self._bidsFileTypes = json.load(stream)
