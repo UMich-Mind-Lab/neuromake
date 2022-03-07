@@ -1,0 +1,56 @@
+{
+  "bids": {
+    "__metadata__":{
+      "label":"BIDS variables",
+      "help":"Manage current BIDS variables used as wildcards within the current snakemake pipeline.",
+      "required":["subject"],
+      "valid":["subject","session","anat_acquisition","anat_ceagent","anat_reconstruction","anat_run","anat_part","anat_mod","anat_echo","anat_flip","anat_inv","anat_mt","anat_suffix","func_task","func_acquisition","func_ceagent","func_reconstruction","func_direction","func_run","func_echo","func_part","func_suffix","dwi_acquisition","dwi_direction","dwi_run","dwi_part","dwi_suffix","physio_recording","physio_suffix","fmap_acquisition","fmap_ceagent","fmap_direction","fmap_run","fmap_suffix"]
+      },
+    "subject": [
+      "01","02"
+    ],
+    "func_task": ["read"],
+    "func_run": ["1","2","3","4"],
+    "func_suffix": ["bold"],
+    "anat_suffix": ["T1w"],
+    "fmap_acquisition":[
+      "multiband"
+    ],
+    "fmap_direction": [
+      "AP",
+      "PA"
+    ],
+    "fmap_suffix": [
+      "epi"
+    ]
+  },
+  "directories": {
+    "__metadata__":{
+      "label":"Paths",
+      "help":"Specify paths and directories to be used within the snakemake pipeline.",
+      "required":["bids","bidslayout","working","output"]
+    },
+    "working":"./working",
+    "output": "./output",
+    "bids": "/home/burtonjz/bids/ds003988",
+    "bidslayout": "/home/burtonjz/bidslayoutdb/ds003988",
+    "neurotools": "../../lib/neurotools.sif",
+    "spm12": "../../lib/spm12.sif"
+  },
+  "settings": {
+    "__metadata__":{
+      "label":"Snakemake settings",
+      "help":"Specify setting variables required to run snakemake pipeline logic",
+      "required":[]
+    },
+    "use_physio": true,
+    "use_fieldmap": true
+  },
+  "templates": {
+    "__metadata__":{
+      "label":"String Formats",
+      "help":"Specify snakemake wildcard template strings. These are used within the pipeline's snakefile to specify the base BIDS variables used for a specific dataset, without hard-coding those specific bids variables in the snakefile",
+      "required":[]
+    }
+  }
+}
