@@ -1,0 +1,4 @@
+include config/*.json
+include tests/config/*.json
+recursive-include tests/bids *
+recursive-include tests/bidslayout *
