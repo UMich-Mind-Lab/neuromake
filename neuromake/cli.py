@@ -16,6 +16,7 @@ def cli():
             cfg = cfg_paths[0]
             del cfg_paths[0]
         except:
+            cfg = None
             break
     config = nm.Config(cfg)
     args = _parseargs(config)
