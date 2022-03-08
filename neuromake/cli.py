@@ -38,7 +38,7 @@ def _parseargs(config):
     operate on BIDS datasets. This command-line interface prepares a specific
     config file, which is used to manage all variables necessary to run the
     workflow.
-    ''').replace('\n','').replace('\t','')
+    '''.replace('\n','').replace('\t',''))
 
     ap.add_argument(
         '--reindex',
