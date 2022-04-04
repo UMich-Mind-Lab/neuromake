@@ -1,0 +1,9 @@
+{
+  "subject":"sub",
+  "session":"ses",
+  "acquisition":"acq",
+  "ceagent":"ce",
+  "reconstruction":"rec",
+  "direction":"dir",
+  "modality":"mod"
+}

@@ -1,0 +1,9 @@
+Untitled.ipynb
+bin
+.pytest_cache
+exit
+list
+activate
+deactivate
+__pycache__
+neuromake.egg-info
